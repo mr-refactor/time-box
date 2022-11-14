@@ -1,16 +1,32 @@
-import { FormEvent, ChangeEvent, FunctionComponent } from "react";
+import {
+  FormEvent,
+  ChangeEvent,
+  FunctionComponent,
+  useState,
+  useContext,
+} from "react";
+import { TaskContext } from "../../context/TasksContext";
 
-interface Props {
-  handleSubmit: (e: FormEvent) => void;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-}
+const useForm = () => {
+  const [value, setValue] = useState("");
+  const { addTask } = useContext(TaskContext);
 
-export const AddTaskForm: FunctionComponent<Props> = ({
-  handleSubmit,
-  handleChange,
-  value,
-}) => {
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
+    setValue(e.target.value);
+  }
+
+  function handleSubmit(e: FormEvent): void {
+    e.preventDefault();
+    addTask(value);
+    setValue("");
+  }
+
+  return { handleSubmit, handleChange, value };
+};
+
+export const AddTaskForm: FunctionComponent = () => {
+  const { handleSubmit, handleChange, value } = useForm();
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="tasks">Today&apos;s Tasks</label>

@@ -1,19 +1,17 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, MouseEvent } from "react";
+import { TaskContext } from "../../context/TasksContext";
 import styles from "../../styles/TaskBox.module.css";
-
-interface TaskBoxProps {
-  taskList: string[];
-}
-
 interface TaskProps {
   value: string;
 }
 
-export const TaskBox: FunctionComponent<TaskBoxProps> = ({ taskList }) => {
+export const TaskBox: FunctionComponent = () => {
+  const { tasks } = useContext(TaskContext);
+
   return (
     <div className={styles.box}>
       <ul>
-        {taskList.map((t, i) => (
+        {tasks.map((t, i) => (
           <Task key={`${i}-${t}`} value={t} />
         ))}
       </ul>
@@ -32,9 +30,15 @@ const Task: FunctionComponent<TaskProps> = ({ value }) => {
   );
 };
 
-const XIcon = () => {
+const XIcon: FunctionComponent = () => {
+  const { removeTask } = useContext(TaskContext);
+  function handleClick(e: MouseEvent) {
+    console.log(e);
+  }
+
   return (
     <svg
+      onClick={handleClick}
       className={styles["x-icon"]}
       xmlns="http://www.w3.org/2000/svg"
       width="16"
