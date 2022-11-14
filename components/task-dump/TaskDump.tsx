@@ -1,40 +1,44 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import styles from "../../styles/TaskDump.module.css";
+import { AddTaskForm } from "./AddTaskForm";
 
 const useForm = () => {
   const [value, setValue] = useState("");
+  const [taskList, setTaskList] = useState<string[]>([]);
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     setValue(e.target.value);
   }
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    console.log("form submitted");
+    addToTaskList(value);
+    setValue("");
   }
 
-  return { handleSubmit, handleChange, value };
+  function addToTaskList(task: string): void {
+    setTaskList((prev) => [...prev, task]);
+  }
+
+  return { handleSubmit, handleChange, value, taskList };
 };
 
 export const TaskDump = () => {
-  const { handleSubmit, handleChange, value } = useForm();
+  const { handleSubmit, handleChange, value, taskList } = useForm();
 
   return (
     <section className={styles.container}>
       <h2>Task Dump</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="tasks">Today&apos;s Tasks</label>
-        <input
-          type="text"
-          value={value}
-          id="tasks"
-          name="tasks"
-          placeholder="One task for today."
-          onChange={handleChange}
-        ></input>
-        <button type="submit">Add</button>
-      </form>
-      <div className={styles.box}></div>
+      <AddTaskForm
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        value={value}
+      />
+      <div className={styles.box}>
+        {taskList.map((task, i) => (
+          <p key={`${i}-${task}`}>{task}</p>
+        ))}
+      </div>
     </section>
   );
 };
