@@ -1,6 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import styles from "../../styles/TaskDump.module.css";
 import { AddTaskForm } from "./AddTaskForm";
+import { TaskBox } from "./TaskBox";
 
 const useForm = () => {
   const [value, setValue] = useState("");
@@ -34,11 +35,7 @@ export const TaskDump = () => {
         handleChange={handleChange}
         value={value}
       />
-      <div className={styles.box}>
-        {taskList.map((task, i) => (
-          <p key={`${i}-${task}`}>{task}</p>
-        ))}
-      </div>
+      <TaskBox taskList={taskList} />
     </section>
   );
 };
