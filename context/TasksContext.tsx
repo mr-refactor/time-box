@@ -4,51 +4,50 @@ import {
   ReactNode,
   FunctionComponent,
 } from "react";
-
+import {Task} from "../types/Task"
 interface ContextProps {
-  tasks: string[];
-  addTask: (task: string) => void;
-  removeTask: (index: number) => void;
-  editTask: (index: number, newState: string) => void;
+  tasks: Task[];
+  addTask: (task: Task) => void;
+  removeTask: (index: string) => void;
+  // editTask: (id: string, newValue: string) => void;
 }
-
 interface Props {
   children?: ReactNode;
 }
 
 export const TaskContext = createContext<ContextProps>({
   tasks: [],
-  addTask: (task: string) => undefined,
-  removeTask: (index: number) => undefined,
-  editTask: (index: number, newState: string) => undefined,
+  addTask: (task: Task) => undefined,
+  removeTask: (id: string) => undefined,
+  // editTask: (id: string, newValue: string) => undefined,
 });
 
 export const TasksContextProvider: FunctionComponent<Props> = ({
   children,
 }) => {
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  function addTask(task: string): void {
+  function addTask(task: Task): void {
     setTasks((prev) => [...prev, task]);
   }
 
-  function removeTask(index: number): void {
-    setTasks((prev) => prev.filter((_, i) => i !== index));
+  function removeTask(id: string): void {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   }
 
-  function editTask(index: number, newState: string) {
-    setTasks((prev) => {
-        prev[index] = newState;
-        return prev;
-    })
-  }
+  // function editTask(id: string, newValue: string) {
+  //   setTasks((prev) => {
+  //       prev[index] = newValue;
+  //       return prev;
+  //   })
+  // }
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
         addTask,
-        editTask,
+        // editTask,
         removeTask
       }}
     >

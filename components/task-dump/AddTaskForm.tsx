@@ -6,6 +6,7 @@ import {
   useContext,
 } from "react";
 import { TaskContext } from "../../context/TasksContext";
+import { generateUUID } from "../../utils/generateUUID";
 
 const useForm = () => {
   const [value, setValue] = useState("");
@@ -17,7 +18,11 @@ const useForm = () => {
 
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    addTask(value);
+    const task = {
+      value,
+      id: generateUUID()
+    }
+    addTask(task);
     setValue("");
   }
 
