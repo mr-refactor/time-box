@@ -29,7 +29,6 @@ const Task: FC<TaskProps> = ({ task }) => {
     <li>
       <p className={styles["list-item"]}>
         {task.value}
-        <PencilIcon />
         <XIcon taskId={task.id} />
       </p>
     </li>
@@ -38,9 +37,9 @@ const Task: FC<TaskProps> = ({ task }) => {
 
 // TODO: refactor to just a icon component that takes an icon and a handler
 const XIcon: FC<IconProps> = ({ taskId }) => {
-  const { editTask } = useContext(TaskContext);
+  const { removeTask } = useContext(TaskContext);
   function handleClick(): void {
-    editTask(taskId);
+    removeTask(taskId);
   }
 
   return (
@@ -58,10 +57,10 @@ const XIcon: FC<IconProps> = ({ taskId }) => {
   );
 };
 
-const PencilIcon: FunctionComponent<IconProps> = () => {
+const PencilIcon: FC<IconProps> = () => {
   const { removeTask } = useContext(TaskContext);
   function handleClick(): void {
-    removeTask(taskId);
+    console.log("hello")
   }
 
   return (
