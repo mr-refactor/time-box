@@ -2,30 +2,32 @@ import { FunctionComponent as FC, useContext, useRef, DragEvent } from "react";
 import { TaskContext } from "../../context/TasksContext";
 import { Draggable } from "../Draggable";
 
-export const PrioritiesList = () => {
+const useReorderTasks = () => {
   const { tasks, reorderTasks } = useContext(TaskContext);
   const draggingTask = useRef<number>();
   const dragOverTask = useRef<number>();
 
-  const handleDragStart = (e: DragEvent, position: number): void => {
+  function handleDragStart(e: DragEvent, position: number): void {
     draggingTask.current = position;
-  };
+  }
 
-  const handleDragEnter = (e: DragEvent, position: number): void => {
+  function handleDragEnter(e: DragEvent, position: number): void {
+    if (draggingTask.current === undefined) return;
     dragOverTask.current = position;
-  };
-
-  function handleDragEnd(): void {
-    if (
-      draggingTask.current === undefined ||
-      dragOverTask.current === undefined
-    )
-      return;
     reorderTasks(draggingTask.current, dragOverTask.current);
-
-    draggingTask.current = undefined;
+    draggingTask.current = dragOverTask.current;
     dragOverTask.current = undefined;
   }
+
+  return {
+    tasks,
+    handleDragStart,
+    handleDragEnter,
+  };
+};
+
+export const PrioritiesList = () => {
+  const { tasks, handleDragStart, handleDragEnter } = useReorderTasks();
 
   return (
     <div>
@@ -34,7 +36,6 @@ export const PrioritiesList = () => {
           key={t.id}
           onDragStart={(e) => handleDragStart(e, index)}
           onDragEnter={(e) => handleDragEnter(e, index)}
-          onDragEnd={handleDragEnd}
         >
           <p>{t.value}</p>
         </Draggable>
