@@ -30,31 +30,33 @@ export const TaskBox: FC = () => {
   );
 };
 
-const useEditing = (initTaksValue: string): any => {
+const useEditing = (task: Task): any => {
+  const {editTask} = useContext(TaskContext);
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(initTaksValue);
+  const [editValue, setEditValue] = useState(task.value);
 
   function startEditing(): void {
     setIsEditing(true);
   }
 
-  function stopEditing(): void {
+  function updateTask(): void {
+    editTask(task.id, editValue)
     setIsEditing(false);
   }
 
-  return { isEditing, startEditing, editValue, stopEditing, setEditValue };
+  return { isEditing, startEditing, editValue, updateTask, setEditValue };
 };
 
 const Task: FC<TaskProps> = ({ task }) => {
   const { removeTask } = useContext(TaskContext);
-  const { isEditing, startEditing, stopEditing, editValue, setEditValue } =
-    useEditing(task.value);
+  const { isEditing, startEditing, updateTask, editValue, setEditValue } =
+    useEditing(task);
 
   return (
     <li>
       <div className={styles["list-item"]}>
         {isEditing ? (
-          <form onSubmit={stopEditing}>
+          <form onSubmit={updateTask} onBlur={updateTask}>
             <input
               type="text"
               value={editValue}

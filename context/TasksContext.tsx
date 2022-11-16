@@ -1,15 +1,10 @@
-import {
-  createContext,
-  useState,
-  ReactNode,
-  FunctionComponent,
-} from "react";
-import {Task} from "../types/Task"
+import { createContext, useState, ReactNode, FunctionComponent } from "react";
+import { Task } from "../types/Task";
 interface ContextProps {
   tasks: Task[];
   addTask: (task: Task) => void;
   removeTask: (index: string) => void;
-  // editTask: (id: string, newValue: string) => void;
+  editTask: (id: string, newValue: string) => void;
 }
 interface Props {
   children?: ReactNode;
@@ -19,7 +14,7 @@ export const TaskContext = createContext<ContextProps>({
   tasks: [],
   addTask: (task: Task) => undefined,
   removeTask: (id: string) => undefined,
-  // editTask: (id: string, newValue: string) => undefined,
+  editTask: (id: string, newValue: string) => undefined,
 });
 
 export const TasksContextProvider: FunctionComponent<Props> = ({
@@ -35,20 +30,27 @@ export const TasksContextProvider: FunctionComponent<Props> = ({
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }
 
-  // function editTask(id: string, newValue: string) {
-  //   setTasks((prev) => {
-  //       prev[index] = newValue;
-  //       return prev;
-  //   })
-  // }
+  function editTask(id: string, newValue: string) {
+    setTasks((prev) => {
+      return prev.map((task) => {
+        if ((task.id === id)) {
+          return {
+            ...task,
+            value: newValue,
+          };
+        }
+        return task;
+      });
+    });
+  }
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
         addTask,
-        // editTask,
-        removeTask
+        editTask,
+        removeTask,
       }}
     >
       {children}
