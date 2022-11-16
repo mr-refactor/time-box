@@ -1,7 +1,4 @@
-import {
-  FunctionComponent as FC,
-  useContext,
-} from "react";
+import { FunctionComponent as FC, useContext } from "react";
 import { TaskContext } from "../../context/TasksContext";
 import { TaskComponent } from "./TaskComponent";
 import styles from "../../styles/TaskBox.module.css";
@@ -19,5 +16,3 @@ export const TaskBox: FC = () => {
     </div>
   );
 };
-
-
