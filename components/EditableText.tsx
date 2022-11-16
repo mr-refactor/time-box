@@ -1,7 +1,10 @@
-import React from 'react'
+import { useState, ReactNode, FunctionComponent as FC } from "react";
 
-export const EditableText = () => {
-  return (
-    <div>EditableText</div>
-  )
+interface Props {
+  children: ReactNode;
 }
+
+export const EditableText: FC<Props> = ({ children }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  return <>{isEditing ? <input></input> : <div>{children}</div>}</>;
+};
