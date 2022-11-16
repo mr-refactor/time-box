@@ -7,11 +7,11 @@ const useReorderTasks = () => {
   const draggingTask = useRef<number>();
   const dragOverTask = useRef<number>();
 
-  function handleDragStart(e: DragEvent, position: number): void {
+  function handleDragStart(_e: DragEvent, position: number): void {
     draggingTask.current = position;
   }
 
-  function handleDragEnter(e: DragEvent, position: number): void {
+  function handleDragEnter(_e: DragEvent, position: number): void {
     if (draggingTask.current === undefined) return;
     dragOverTask.current = position;
     reorderTasks(draggingTask.current, dragOverTask.current);
