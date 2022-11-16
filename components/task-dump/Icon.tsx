@@ -8,7 +8,7 @@ interface IconProps {
   handleClick: (e?: MouseEvent) => void;
 }
 
-// TODO: refactor to just a icon component that takes an icon and a handler
+// TODO: refactor to just a icon component that takes an icon type and a handler
 export const XIcon: FC<IconProps> = ({ handleClick }) => {
   return (
     <svg

@@ -1,8 +1,4 @@
-import {
-  FunctionComponent as FC,
-  useContext,
-  useState,
-} from "react";
+import { FunctionComponent as FC, useContext, useState } from "react";
 import { TaskContext } from "../../context/TasksContext";
 import { Task } from "../../types/Task";
 import { XIcon, PencilIcon } from "./Icon";
@@ -48,7 +44,6 @@ export const TaskComponent: FC<TaskProps> = ({ task }) => {
         ) : (
           <span>{task.value}</span>
         )}
-
         <XIcon handleClick={() => removeTask(task.id)} />
         <PencilIcon handleClick={startEditing} />
       </div>
