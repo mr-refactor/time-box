@@ -1,5 +1,6 @@
 import { FunctionComponent as FC, useContext, useState } from "react";
 import { TaskContext } from "../../context/TasksContext";
+import styles from "../../styles/PrioritiesLayout.module.css";
 
 export const PrioritiesList = () => {
   const { tasks } = useContext(TaskContext);
@@ -7,7 +8,9 @@ export const PrioritiesList = () => {
   return (
     <div>
       {tasks.map((t) => (
-        <p key={t.id}>{t.value}</p>
+        <p className={styles["draggable-task"]} key={t.id}>
+          {t.value}
+        </p>
       ))}
     </div>
   );
