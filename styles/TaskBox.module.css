@@ -1,0 +1,14 @@
+.box {
+    border: 1px solid #727272;
+    border-radius: 2px;
+    height: 30rem;
+    width: 20rem;
+}
+
+.list-item {
+    display: flex;
+}
+
+.x-icon {
+    cursor: pointer;
+}
