@@ -12,6 +12,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div>{process.env.NEXT_PUBLIC_HELLO}</div>
     </div>
   );
 }
